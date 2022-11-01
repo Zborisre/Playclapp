@@ -8,7 +8,7 @@ public class ObjectPooler : MonoBehaviour
     public static ObjectPooler instance;
 
     public static List<GameObject> poolObjectsTarget = new List<GameObject>();
-    public int ColOfPool = 20;
+    public int ColOfPool = 6;
 
     [SerializeField] private GameObject TargedPre;
 
@@ -23,7 +23,7 @@ public class ObjectPooler : MonoBehaviour
     void Start()
     {
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < ColOfPool; i++)
         {
             GameObject obj = Instantiate(TargedPre);
             obj.SetActive(false);

@@ -1,31 +1,46 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
     public float cooldown = 0.1f;
 
-    // Включение корутины кулдауна для спавна объекта
-    void Start()
+    public static int startorstop = 1;
+
+    public InputField cooldowninput;
+    public InputField distanceinput;
+    public InputField speedinput;
+
+    public static int distance;
+    public static int speed;
+
+
+    private void Update()
     {
-       StartCoroutine(SpawnCooldown());
+        distance = Convert.ToInt16(distanceinput.text);
+        speed = Convert.ToInt16(speedinput.text);
+        cooldown = Convert.ToInt16(cooldowninput.text);
+        if (startorstop == 1)
+        {
+            startorstop = 0;
+            StartCoroutine(SpawnCooldown());
+        }
     }
 
     // Происходит спавн объектов при кулдауне равном 0, сделано для того, чтобы пул объектов успел создать клонов по префабам
-    void SpawnObjects()
+    public void SpawnObjects()
     {
         if (cooldown == 0)
         {
             cooldown = 0.1f;
-            for (int i = 0; i < 3; i++)
+            GameObject cube = ObjectPooler.instance.SpawnCube();
+            if (cube != null)
             {
-                GameObject cube = ObjectPooler.instance.SpawnCube();
-                if (cube != null)
-                {
-                    cube.transform.position = new Vector3(0 + i * 2, 0.5f, 0);
-                    cube.transform.rotation = transform.rotation;
-                    cube.SetActive(true);
-                }
+                cube.transform.position = new Vector3(0, 0.5f, 0);
+                cube.transform.rotation = transform.rotation;
+                cube.SetActive(true);
             }
         }
     }

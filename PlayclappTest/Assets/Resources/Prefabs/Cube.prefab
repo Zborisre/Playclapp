@@ -113,4 +113,5 @@ MonoBehaviour:
   cooldown: 2
   distance: 20
   speed: 0.2
+  distanceField: {fileID: 0}
   startlocation: {x: 0, y: 0, z: 0}

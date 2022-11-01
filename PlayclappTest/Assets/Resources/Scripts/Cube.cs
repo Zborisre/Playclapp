@@ -1,18 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class Cube : MonoBehaviour
 {
-    public float cooldown = 0.1f;
-    public int distance = 20;
-    public float speed = 0.2f;
-
-    public Vector3 startlocation;
+    public int distance;
+    public int speed;
 
     private void Start()
     {
-        startlocation = transform.position;
+        distance = 20;
+        speed = 1;
     }
 
     void Update()
@@ -23,29 +22,15 @@ public class Cube : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target) < 0.001f)
         {
-            StartCoroutine(SpawnCooldown());
+            RespawnCube();
         }
     }
 
     void RespawnCube()
     {
+        distance = Spawner.distance;
+        speed = Spawner.speed;
         gameObject.SetActive(false);
-        GameObject cube = ObjectPooler.instance.SpawnCube();
-        if (cube != null)
-        {
-            cube.transform.position = startlocation;
-            cube.transform.rotation = transform.rotation;
-            cube.SetActive(true);
-        }
-    }
-
-
-    IEnumerator SpawnCooldown()
-    {
-        yield return new WaitForSeconds(cooldown);
-
-        cooldown = 0;
-        StopCoroutine(SpawnCooldown());
-        RespawnCube();
+        Spawner.startorstop = 1;
     }
 }
